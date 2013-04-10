@@ -29,5 +29,11 @@ namespace PurdueMenuApp
                 App.ViewModel.LoadData();
             }
         }
+
+        // Load dining court listing
+        private void LoadLocationList()
+        {
+            var webget = new HtmlWeb();
+        }
     }
 }
