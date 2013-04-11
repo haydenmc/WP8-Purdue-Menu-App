@@ -16,6 +16,7 @@ namespace PurdueMenuApp
     public partial class App : Application
     {
         private static MainViewModel viewModel = null;
+        public static DiningCourt selected_dc = null;
 
         /// <summary>
         /// A static ViewModel used by the views to bind against.
@@ -141,7 +142,8 @@ namespace PurdueMenuApp
 
             // Create the frame but don't set it as RootVisual yet; this allows the splash
             // screen to remain active until the application is ready to render.
-            RootFrame = new PhoneApplicationFrame();
+            //RootFrame = new PhoneApplicationFrame();
+            RootFrame = new TransitionFrame();
             RootFrame.Navigated += CompleteInitializePhoneApplication;
 
             // Handle navigation failures
