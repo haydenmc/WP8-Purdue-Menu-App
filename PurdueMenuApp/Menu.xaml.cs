@@ -65,37 +65,64 @@ namespace PurdueMenuApp
             //Load breakfast
             HtmlNodeCollection breakfasttags = document.DocumentNode.SelectNodes("//div[@id='Breakfast']//tr[@class=\"menu-item\"]/td/span"); ///td/span
             collection_breakfast.Clear();
-            foreach (HtmlNode mi in breakfasttags)
+            if (breakfasttags != null)
             {
-                MenuItem m = new MenuItem
+                foreach (HtmlNode mi in breakfasttags)
                 {
-                    name = mi.InnerHtml
-                };
-                collection_breakfast.Add(m);
+                    MenuItem m = new MenuItem
+                    {
+                        name = HtmlEntity.DeEntitize(mi.InnerText)
+                    };
+                    collection_breakfast.Add(m);
+                }
+            }
+            else
+            {
+                menu_pivot.Items.Remove(pivot_breakfast);
             }
 
             //Load lunch
             HtmlNodeCollection lunchtags = document.DocumentNode.SelectNodes("//div[@id='Lunch']//tr[@class=\"menu-item\"]/td/span"); ///td/span
             collection_lunch.Clear();
-            foreach (HtmlNode mi in lunchtags)
+            if (lunchtags != null)
             {
-                MenuItem m = new MenuItem
+                foreach (HtmlNode mi in lunchtags)
                 {
-                    name = mi.InnerHtml
-                };
-                collection_lunch.Add(m);
+                    MenuItem m = new MenuItem
+                    {
+                        name = HtmlEntity.DeEntitize(mi.InnerText)
+                    };
+                    collection_lunch.Add(m);
+                }
+            }
+            else
+            {
+                menu_pivot.Items.Remove(pivot_lunch);
             }
 
             //Load dinner
             HtmlNodeCollection dinnertags = document.DocumentNode.SelectNodes("//div[@id='Dinner']//tr[@class=\"menu-item\"]/td/span"); ///td/span
             collection_dinner.Clear();
-            foreach (HtmlNode mi in dinnertags)
+            if (dinnertags != null)
             {
-                MenuItem m = new MenuItem
+                foreach (HtmlNode mi in dinnertags)
                 {
-                    name = mi.InnerHtml
-                };
-                collection_dinner.Add(m);
+                    MenuItem m = new MenuItem
+                    {
+                        name = HtmlEntity.DeEntitize(mi.InnerText)
+                    };
+                    collection_dinner.Add(m);
+                }
+            }
+            else
+            {
+                menu_pivot.Items.Remove(pivot_dinner);
+            }
+
+            if (breakfasttags == null && lunchtags == null && dinnertags == null)
+            {
+                MessageBox.Show("This location is not serving today.");
+                NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
             }
         }
     }

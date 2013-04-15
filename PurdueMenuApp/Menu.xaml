@@ -43,7 +43,7 @@
         <!--Pivot Control-->
         <phone:Pivot x:Name="menu_pivot" Title="LOCATION">
             <!--Pivot item one-->
-            <phone:PivotItem Header="breakfast">
+            <phone:PivotItem x:Name="pivot_breakfast" Header="breakfast">
                 <Grid>
                     <phone:LongListSelector x:Name="list_breakfast" ItemsSource="{Binding Items}">
                         <phone:LongListSelector.ItemTemplate>
@@ -58,7 +58,7 @@
             </phone:PivotItem>
 
             <!--Pivot item two-->
-            <phone:PivotItem Header="lunch">
+            <phone:PivotItem x:Name="pivot_lunch" Header="lunch">
                 <Grid>
                     <phone:LongListSelector x:Name="list_lunch" ItemsSource="{Binding Items}">
                         <phone:LongListSelector.ItemTemplate>
@@ -73,7 +73,7 @@
             </phone:PivotItem>
 
             <!--Pivot item three-->
-            <phone:PivotItem Header="dinner">
+            <phone:PivotItem x:Name="pivot_dinner" Header="dinner">
                 <Grid>
                     <phone:LongListSelector x:Name="list_dinner" ItemsSource="{Binding Items}">
                         <phone:LongListSelector.ItemTemplate>

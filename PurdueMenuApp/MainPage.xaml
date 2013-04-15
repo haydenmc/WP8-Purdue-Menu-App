@@ -72,7 +72,7 @@
             <!--Panorama item two-->
             <phone:PanoramaItem>
                 <!--Double line list with image placeholder and text wrapping using a floating header that scrolls with the content-->
-                <phone:LongListSelector x:Name="list_diningcourts" Margin="0,-38,-22,2" ItemsSource="{Binding Items}" Tap="list_diningcourts_Tap">
+                <phone:LongListSelector x:Name="list_diningcourts" Margin="0,-38,-22,2" ItemsSource="{Binding Items}" SelectionChanged="list_diningcourts_SelectionChanged">
                     <phone:LongListSelector.ListHeaderTemplate>
                         <DataTemplate>
                             <Grid Margin="12,0,0,38">

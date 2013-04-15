@@ -104,9 +104,23 @@ namespace PurdueMenuApp
 
         private void list_diningcourts_Tap(object sender, System.Windows.Input.GestureEventArgs e)
         {
-            DiningCourt dc = ((list_diningcourts as LongListSelector).SelectedItem as DiningCourt);
-            NavigationService.Navigate(new Uri("/Menu.xaml", UriKind.Relative));
-            App.selected_dc = dc;
+            
+        }
+
+        private void ListBoxItem_Tap(object sender, System.Windows.Input.GestureEventArgs e)
+        {
+
+        }
+
+        private void list_diningcourts_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (list_diningcourts.SelectedItem is DiningCourt)
+            {
+                DiningCourt dc = ((list_diningcourts as LongListSelector).SelectedItem as DiningCourt);
+                NavigationService.Navigate(new Uri("/Menu.xaml", UriKind.Relative));
+                App.selected_dc = dc;
+                list_diningcourts.SelectedItem = null;
+            }
         }
     }
 }
