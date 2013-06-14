@@ -89,11 +89,18 @@ namespace PurdueMenuApp
                             //Find the ID
                             HtmlNode id_link = dc.ChildNodes.FindFirst("a");
                             String webid = id_link.Attributes["href"].Value;
-                            webid = webid.Substring(webid.LastIndexOf('/') + 1, webid.Length - webid.LastIndexOf('/') - 1); 
+                            webid = webid.Substring(webid.LastIndexOf('/') + 1, webid.Length - webid.LastIndexOf('/') - 1);
+                            
+                            if (dc.Attributes["class"].Value.Contains("open"))
+                            {
+                                String time = dc.SelectNodes("a/div[@class='features-menu']/div[@id='Breakfast']/p").First().InnerText;
+                            }
+                            //HtmlNodeCollection breakfast_time = dc.SelectNodes("a/div[@class=features-menu]/div[@id=Breakfast]").
                             DiningCourt d = new DiningCourt {
                                 name = dc.Attributes["id"].Value,
                                 web_id = webid,
-                                open = dc.Attributes["class"].Value.Contains("open")
+                                open = dc.Attributes["class"].Value.Contains("open"),
+                                //time_breakfast_open = new DateTimeOffset(DateTime.Now.Year,DateTime.Now.Month,DateTime.Now.Day,
                             };
                             diningcourts.Add(d);
                         }

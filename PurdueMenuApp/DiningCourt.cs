@@ -23,5 +23,35 @@ namespace PurdueMenuApp
             get;
             set;
         }
+        public DateTimeOffset time_breakfast_open
+        {
+            get;
+            set;
+        }
+        public DateTimeOffset time_breakfast_close
+        {
+            get;
+            set;
+        }
+        public DateTimeOffset time_lunch_open
+        {
+            get;
+            set;
+        }
+        public DateTimeOffset time_lunch_close
+        {
+            get;
+            set;
+        }
+        public DateTimeOffset time_dinner_open
+        {
+            get;
+            set;
+        }
+        public DateTimeOffset time_dinner_close
+        {
+            get;
+            set;
+        }
     }
 }
