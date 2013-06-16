@@ -16,7 +16,14 @@
     SupportedOrientations="Portrait"  Orientation="Portrait"
     shell:SystemTray.IsVisible="True"
     local:TiltEffect.IsTiltEnabled="True">
+    <phone:PhoneApplicationPage.Resources>
+        <Thickness x:Key="details_list_margin">0,12</Thickness>
+        <local:IsOpenNowConverter x:Key="IsOpenNowConverter" />
+        <local:IsServingTodayConverter x:Key="IsServingTodayConverter" />
+        <local:NextOpenTimeConverter x:Key="NextOpenTimeConverter" />
+    </phone:PhoneApplicationPage.Resources>
 
+    
     <toolkit:TransitionService.NavigationInTransition>
         <toolkit:NavigationInTransition>
             <toolkit:NavigationInTransition.Backward>
@@ -37,11 +44,41 @@
             </toolkit:NavigationOutTransition.Forward>
         </toolkit:NavigationOutTransition>
     </toolkit:TransitionService.NavigationOutTransition>
-    
+
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <!--Pivot Control-->
         <phone:Pivot x:Name="menu_pivot" Title="LOCATION">
+            <phone:PivotItem x:Name="pivot_details" Header="details">
+                <StackPanel Orientation="Vertical">
+                    <Grid Height="200" VerticalAlignment="Top" Margin="0,0,0,0">
+                        <Image x:Name="image" Source="/Images/dining_courts/ford.jpg" Opacity="0.6" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center" />
+                        <TextBlock x:Name="title" Text="Dining Court Details" FontSize="{StaticResource PhoneFontSizeExtraLarge}" FontWeight="Medium" HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="{StaticResource PhoneMargin}"/>
+                    </Grid>
+                    <Grid x:Name="open_indicator" Height="48" Margin="0,0,0,12">
+                        <Border BorderThickness="0" Visibility="{Binding open_times, Converter={StaticResource IsOpenNowConverter}}">
+                            <Border.Background>
+                                <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
+                            </Border.Background>
+                        </Border>
+                        <TextBlock Text="{Binding open_times,Converter={StaticResource NextOpenTimeConverter},FallbackValue='open for 1 minute'}" HorizontalAlignment="Left" VerticalAlignment="Bottom" FontSize="34" Margin="12,0,0,2" FontWeight="Light"></TextBlock>
+                    </Grid>
+                    <StackPanel Margin="12,0">
+                        <ListBoxItem x:Name="listbox_address" Margin="{StaticResource details_list_margin}" Tap="listbox_address_Tap">
+                            <StackPanel>
+                                <TextBlock x:Name="address_header" Text="address" FontSize="{StaticResource LongListSelectorGroupHeaderFontSize}" FontWeight="Light" Foreground="{StaticResource PhoneForegroundBrush}" />
+                                <TextBlock x:Name="address_listing" Text="loading ..." Foreground="{StaticResource PhoneAccentBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                            </StackPanel>
+                        </ListBoxItem>
+                        <ListBoxItem Margin="{StaticResource details_list_margin}">
+                            <StackPanel>
+                                <TextBlock x:Name="hours_header" Text="hours" FontSize="{StaticResource LongListSelectorGroupHeaderFontSize}" FontWeight="Light" Foreground="{StaticResource PhoneForegroundBrush}" />
+                                <TextBlock x:Name="hours_listing" Text="" Foreground="{StaticResource PhoneTextMidContrastBrush}" FontSize="{StaticResource PhoneFontSizeNormal}"></TextBlock>
+                            </StackPanel>
+                        </ListBoxItem>
+                    </StackPanel>
+                </StackPanel>
+            </phone:PivotItem>
             <!--Pivot item one-->
             <phone:PivotItem x:Name="pivot_breakfast" Header="breakfast">
                 <Grid>
@@ -88,5 +125,5 @@
             </phone:PivotItem>
         </phone:Pivot>
     </Grid>
-    
+
 </phone:PhoneApplicationPage>

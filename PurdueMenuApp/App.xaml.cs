@@ -10,6 +10,7 @@ using Microsoft.Phone.Controls;
 using Microsoft.Phone.Shell;
 using PurdueMenuApp.Resources;
 using PurdueMenuApp.ViewModels;
+using System.Windows.Media;
 
 namespace PurdueMenuApp
 {
@@ -76,6 +77,8 @@ namespace PurdueMenuApp
                 // and consume battery power when the user is not using the phone.
                 PhoneApplicationService.Current.UserIdleDetectionMode = IdleDetectionMode.Disabled;
             }
+
+            Resources.Add("PhoneDarkAccentBrush", ShadeHelper.getDarkerShade((Resources["PhoneAccentBrush"] as SolidColorBrush)));
 
         }
 

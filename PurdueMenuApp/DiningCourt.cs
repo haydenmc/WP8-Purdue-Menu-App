@@ -18,37 +18,7 @@ namespace PurdueMenuApp
             get;
             set;
         }
-        public bool open
-        {
-            get;
-            set;
-        }
-        public DateTimeOffset time_breakfast_open
-        {
-            get;
-            set;
-        }
-        public DateTimeOffset time_breakfast_close
-        {
-            get;
-            set;
-        }
-        public DateTimeOffset time_lunch_open
-        {
-            get;
-            set;
-        }
-        public DateTimeOffset time_lunch_close
-        {
-            get;
-            set;
-        }
-        public DateTimeOffset time_dinner_open
-        {
-            get;
-            set;
-        }
-        public DateTimeOffset time_dinner_close
+        public List<List<DateTime>> open_times
         {
             get;
             set;

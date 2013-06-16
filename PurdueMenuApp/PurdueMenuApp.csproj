@@ -94,7 +94,10 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="BooleanToVisibilityConverter.cs" />
+    <Compile Include="NextOpenTimeConverter.cs" />
+    <Compile Include="IsServingTodayConverter.cs" />
     <Compile Include="DiningCourt.cs" />
+    <Compile Include="IsOpenNowConverter.cs" />
     <Compile Include="LocalizedStrings.cs" />
     <Compile Include="MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
@@ -109,6 +112,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>AppResources.resx</DependentUpon>
     </Compile>
+    <Compile Include="ShadeHelper.cs" />
     <Compile Include="TiltEffect.cs" />
     <Compile Include="ViewModels\ItemViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
@@ -139,6 +143,11 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Images\dining_courts\earhart.jpg" />
+    <Content Include="Images\dining_courts\ford.jpg" />
+    <Content Include="Images\dining_courts\hillenbrand.jpg" />
+    <Content Include="Images\dining_courts\wiley.jpg" />
+    <Content Include="Images\dining_courts\windsor.jpg" />
     <Content Include="Images\icon.png" />
     <Content Include="README_FIRST.txt" />
     <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />

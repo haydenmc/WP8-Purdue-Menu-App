@@ -18,7 +18,9 @@
     local:TiltEffect.IsTiltEnabled="True">
 
     <phone:PhoneApplicationPage.Resources>
-        <local:BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <local:IsOpenNowConverter x:Key="IsOpenNowConverter" />
+        <local:IsServingTodayConverter x:Key="IsServingTodayConverter" />
+        <local:NextOpenTimeConverter x:Key="NextOpenTimeConverter" />
     </phone:PhoneApplicationPage.Resources>
 
     <toolkit:TransitionService.NavigationInTransition>
@@ -64,7 +66,7 @@
             CurrentUICulture of the app at run time.
          -->
 
-         <!--Panorama control-->
+        <!--Panorama control-->
         <phone:Panorama Title="food">
 
 
@@ -91,14 +93,20 @@
                             <ListBoxItem>
                                 <StackPanel Orientation="Horizontal" Margin="12,2,0,4" Height="105" Width="432">
                                     <!--Replace rectangle with image-->
-                                    <Border BorderThickness="0" Width="99" Height="99" BorderBrush="#FFFFC700">
+                                    <Border BorderThickness="0" Width="99" Height="99" Visibility="{Binding open_times, Converter={StaticResource IsOpenNowConverter}}">
                                         <Border.Background>
                                             <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
+                                        </Border.Background>
+                                        <TextBlock x:Name="open_text" Text="Open" HorizontalAlignment="Right" VerticalAlignment="Bottom" TextWrapping="Wrap" FontWeight="Light" TextAlignment="Right" Margin="0,0,10,8" FontSize="30" />
+                                    </Border>
+                                    <Border BorderThickness="0" Width="99" Height="99" Visibility="{Binding open_times, Converter={StaticResource IsOpenNowConverter}, ConverterParameter='Inverted'}">
+                                        <Border.Background>
+                                            <SolidColorBrush Color="{StaticResource PhoneProgressBarBackgroundColor}"/>
                                         </Border.Background>
                                     </Border>
                                     <StackPanel Width="311" Margin="8,-7,0,0">
                                         <TextBlock Text="{Binding name, FallbackValue='Food Court'}" TextWrapping="Wrap" Margin="10,0" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeLarge}" />
-                                        <TextBlock Text="Open Now" TextWrapping="Wrap" Margin="10,-2,10,0" Style="{StaticResource PhoneTextSubtleStyle}" Visibility="{Binding open, Converter={StaticResource BooleanToVisibilityConverter}}" >
+                                        <TextBlock Text="{Binding open_times, Converter={StaticResource NextOpenTimeConverter}}" TextWrapping="Wrap" Margin="10,-2,10,0" Style="{StaticResource PhoneTextSubtleStyle}" >
                                             <TextBlock.Foreground>
                                                 <SolidColorBrush Color="{StaticResource PhoneAccentColor}"/>
                                             </TextBlock.Foreground>

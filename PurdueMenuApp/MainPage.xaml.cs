@@ -90,17 +90,30 @@ namespace PurdueMenuApp
                             HtmlNode id_link = dc.ChildNodes.FindFirst("a");
                             String webid = id_link.Attributes["href"].Value;
                             webid = webid.Substring(webid.LastIndexOf('/') + 1, webid.Length - webid.LastIndexOf('/') - 1);
-                            
+
+
+                            List<List<DateTime>> hours = new List<List<DateTime>>();
+
+                            //If we're open today, parse the times we're open.
                             if (dc.Attributes["class"].Value.Contains("open"))
                             {
-                                String time = dc.SelectNodes("a/div[@class='features-menu']/div[@id='Breakfast']/p").First().InnerText;
+                                //String breakfast_time = dc.SelectNodes("a/div[@class='features-menu']/div[@id='Breakfast']/p").First().InnerText;
+                                HtmlNodeCollection times = dc.SelectNodes("a/div[@class='features-menu']/div[@id]/p");
+                                foreach (HtmlNode timeNode in times)
+                                {
+                                    DateTime open_time = DateTime.Parse(timeNode.InnerHtml.Replace(".","").Substring(0, timeNode.InnerHtml.IndexOf("-")-2));
+                                    DateTime close_time = DateTime.Parse(timeNode.InnerHtml.Replace(".", "").Substring(timeNode.InnerHtml.IndexOf("-")-1));
+                                    List<DateTime> time_range = new List<DateTime>();
+                                    time_range.Add(open_time);
+                                    time_range.Add(close_time);
+                                    hours.Add(time_range);
+                                }
                             }
-                            //HtmlNodeCollection breakfast_time = dc.SelectNodes("a/div[@class=features-menu]/div[@id=Breakfast]").
+
                             DiningCourt d = new DiningCourt {
                                 name = dc.Attributes["id"].Value,
                                 web_id = webid,
-                                open = dc.Attributes["class"].Value.Contains("open"),
-                                //time_breakfast_open = new DateTimeOffset(DateTime.Now.Year,DateTime.Now.Month,DateTime.Now.Day,
+                                open_times = hours
                             };
                             diningcourts.Add(d);
                         }
