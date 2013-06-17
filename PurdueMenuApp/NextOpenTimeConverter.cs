@@ -42,11 +42,27 @@ namespace PurdueMenuApp
             }
 
             //Not open now... so find the next closest open time.
+            System.Diagnostics.Debug.WriteLine("FINDING NEXT OPEN TIME:");
             DateTime nextopentime = times.First().First();
             foreach (List<DateTime> range in times)
             {
-                if (range.First().Subtract(DateTime.Now).CompareTo(nextopentime.Subtract(DateTime.Now)) < 0)
+                System.Diagnostics.Debug.WriteLine("Checking time " + range.First() + " against time " + nextopentime);
+                TimeSpan timetonew = range.First().Subtract(DateTime.Now);
+                TimeSpan timetoold = nextopentime.Subtract(DateTime.Now);
+                System.Diagnostics.Debug.WriteLine("Time until " + range.First() + ": " + timetonew + ", time until " + nextopentime + ": " + timetoold);
+                if (timetonew.CompareTo(TimeSpan.Zero) < 0)
+                    continue;
+                if (timetoold.CompareTo(TimeSpan.Zero) < 0)
+                {
+                    System.Diagnostics.Debug.WriteLine("Selecting " + range.First());
                     nextopentime = range.First();
+                    continue;
+                }
+                if (timetonew.CompareTo(timetoold) < 0) // < ?
+                {
+                    System.Diagnostics.Debug.WriteLine("Selecting " + range.First());
+                    nextopentime = range.First();
+                }
             }
             TimeSpan timeuntilopen = nextopentime.Subtract(DateTime.Now);
             if (timeuntilopen.TotalHours >= 1)
