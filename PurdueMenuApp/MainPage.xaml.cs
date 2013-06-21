@@ -59,7 +59,7 @@ namespace PurdueMenuApp
             progress_courts.IsVisible = false;
             if (e.Error != null)
             {
-                MessageBox.Show(e.Error.Message);
+                MessageBox.Show("We're having some trouble connecting to Purdue's menu to fetch the latest menu! Please try again later.");
                 return;
             }
             HtmlDocument document = e.Document;

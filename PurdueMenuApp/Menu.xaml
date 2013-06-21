@@ -21,6 +21,15 @@
         <local:IsOpenNowConverter x:Key="IsOpenNowConverter" />
         <local:IsServingTodayConverter x:Key="IsServingTodayConverter" />
         <local:NextOpenTimeConverter x:Key="NextOpenTimeConverter" />
+
+        <DataTemplate x:Key="GroupHeader">
+            <TextBlock Text="{Binding title,FallbackValue='Food Station'}" Style="{StaticResource PhoneTextGroupHeaderStyle}" Foreground="{StaticResource PhoneAccentBrush}" />
+        </DataTemplate>
+        <DataTemplate x:Key="ItemTemplate">
+            <ListBoxItem>
+                <TextBlock Text="{Binding name,FallbackValue='Menu Item'}" TextWrapping="Wrap" Margin="32,6,0,6" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeMediumLarge}" />
+            </ListBoxItem>
+        </DataTemplate>
     </phone:PhoneApplicationPage.Resources>
 
     
@@ -45,6 +54,7 @@
         </toolkit:NavigationOutTransition>
     </toolkit:TransitionService.NavigationOutTransition>
 
+    
     <!--LayoutRoot is the root grid where all page content is placed-->
     <Grid x:Name="LayoutRoot" Background="Transparent">
         <!--Pivot Control-->
@@ -82,45 +92,21 @@
             <!--Pivot item one-->
             <phone:PivotItem x:Name="pivot_breakfast" Header="breakfast">
                 <Grid>
-                    <phone:LongListSelector x:Name="list_breakfast" ItemsSource="{Binding Items}">
-                        <phone:LongListSelector.ItemTemplate>
-                            <DataTemplate>
-                                <ListBoxItem>
-                                    <TextBlock Text="{Binding name}" TextWrapping="Wrap" Margin="10,6,0,6" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeLarge}" />
-                                </ListBoxItem>
-                            </DataTemplate>
-                        </phone:LongListSelector.ItemTemplate>
-                    </phone:LongListSelector>
+                    <phone:LongListSelector x:Name="list_breakfast" ItemsSource="{Binding Items}" IsGroupingEnabled="True" GroupHeaderTemplate="{StaticResource GroupHeader}" ItemTemplate="{StaticResource ItemTemplate}" />
                 </Grid>
             </phone:PivotItem>
 
             <!--Pivot item two-->
             <phone:PivotItem x:Name="pivot_lunch" Header="lunch">
                 <Grid>
-                    <phone:LongListSelector x:Name="list_lunch" ItemsSource="{Binding Items}">
-                        <phone:LongListSelector.ItemTemplate>
-                            <DataTemplate>
-                                <ListBoxItem>
-                                    <TextBlock Text="{Binding name}" TextWrapping="Wrap" Margin="10,6,0,6" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeLarge}" />
-                                </ListBoxItem>
-                            </DataTemplate>
-                        </phone:LongListSelector.ItemTemplate>
-                    </phone:LongListSelector>
+                    <phone:LongListSelector x:Name="list_lunch" ItemsSource="{Binding Items}" IsGroupingEnabled="True" GroupHeaderTemplate="{StaticResource GroupHeader}" ItemTemplate="{StaticResource ItemTemplate}" />
                 </Grid>
             </phone:PivotItem>
 
             <!--Pivot item three-->
             <phone:PivotItem x:Name="pivot_dinner" Header="dinner">
                 <Grid>
-                    <phone:LongListSelector x:Name="list_dinner" ItemsSource="{Binding Items}">
-                        <phone:LongListSelector.ItemTemplate>
-                            <DataTemplate>
-                                <ListBoxItem>
-                                    <TextBlock Text="{Binding name}" TextWrapping="Wrap" Margin="10,6,0,6" Style="{StaticResource PhoneTextExtraLargeStyle}" FontSize="{StaticResource PhoneFontSizeLarge}" />
-                                </ListBoxItem>
-                            </DataTemplate>
-                        </phone:LongListSelector.ItemTemplate>
-                    </phone:LongListSelector>
+                    <phone:LongListSelector x:Name="list_dinner" ItemsSource="{Binding Items}" IsGroupingEnabled="True" GroupHeaderTemplate="{StaticResource GroupHeader}" ItemTemplate="{StaticResource ItemTemplate}" />
                 </Grid>
             </phone:PivotItem>
         </phone:Pivot>

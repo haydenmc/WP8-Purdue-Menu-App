@@ -94,6 +94,7 @@
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
     <Compile Include="BooleanToVisibilityConverter.cs" />
+    <Compile Include="FoodStation.cs" />
     <Compile Include="NextOpenTimeConverter.cs" />
     <Compile Include="IsServingTodayConverter.cs" />
     <Compile Include="DiningCourt.cs" />

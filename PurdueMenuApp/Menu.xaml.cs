@@ -16,18 +16,18 @@ namespace PurdueMenuApp
 {
     public partial class Menu : PhoneApplicationPage
     {
-        ObservableCollection<MenuItem> collection_breakfast;
-        ObservableCollection<MenuItem> collection_lunch;
-        ObservableCollection<MenuItem> collection_dinner;
+        ObservableCollection<FoodStation<MenuItem>> collection_breakfast;
+        ObservableCollection<FoodStation<MenuItem>> collection_lunch;
+        ObservableCollection<FoodStation<MenuItem>> collection_dinner;
 
         ProgressIndicator progress_menu;
 
         public Menu()
         {
             InitializeComponent();
-            collection_breakfast = new ObservableCollection<MenuItem>();
-            collection_lunch = new ObservableCollection<MenuItem>();
-            collection_dinner = new ObservableCollection<MenuItem>();
+            collection_breakfast = new ObservableCollection<FoodStation<MenuItem>>();
+            collection_lunch = new ObservableCollection<FoodStation<MenuItem>>();
+            collection_dinner = new ObservableCollection<FoodStation<MenuItem>>();
         }
 
         // Load data for the ViewModel Items
@@ -70,6 +70,40 @@ namespace PurdueMenuApp
             HtmlWeb.LoadAsync("http://www.housing.purdue.edu/Menus/"+App.selected_dc.web_id,loadMenu_complete);
         }
 
+        private ObservableCollection<FoodStation<MenuItem>> parseMeal(string mealid,HtmlDocument document)
+        {
+            HtmlNodeCollection stations = document.DocumentNode.SelectNodes("//div[@id='"+mealid+"']//tr");
+            ObservableCollection<FoodStation<MenuItem>> menuCollection = new ObservableCollection<FoodStation<MenuItem>>();
+            if (stations != null)
+            {
+                FoodStation<MenuItem> station = null;
+                foreach (HtmlNode mi in stations)
+                {
+                    HtmlNodeCollection checkstation = mi.SelectNodes("th[@class='station-name']/h4");
+                    if (checkstation != null)
+                    {
+                        if (station != null)
+                            menuCollection.Add(station);
+                        station = new FoodStation<MenuItem>(HtmlEntity.DeEntitize(checkstation.First().InnerText), new List<MenuItem>());
+                        continue;
+                    }
+                    HtmlNode itemnode = mi.SelectSingleNode("td/span");
+                    if (itemnode == null) continue;
+                    MenuItem m = new MenuItem
+                    {
+                        name = HtmlEntity.DeEntitize(itemnode.InnerText)
+                    };
+                    if (station != null)
+                        station.Add(m);
+                }
+                if (station == null)
+                    return null;
+                menuCollection.Add(station);
+                return menuCollection;
+            }
+            return null;
+        }
+
         public void loadMenu_complete(object sender, HtmlDocumentLoadCompleted e)
         {
             progress_menu.IsVisible = false;
@@ -86,66 +120,22 @@ namespace PurdueMenuApp
             address_listing.Text = address;
 
             //Load breakfast
-            HtmlNodeCollection breakfasttags = document.DocumentNode.SelectNodes("//div[@id='Breakfast']//tr[@class=\"menu-item\"]/td/span"); ///td/span
-            collection_breakfast.Clear();
-            if (breakfasttags != null)
-            {
-                foreach (HtmlNode mi in breakfasttags)
-                {
-                    MenuItem m = new MenuItem
-                    {
-                        name = HtmlEntity.DeEntitize(mi.InnerText)
-                    };
-                    collection_breakfast.Add(m);
-                }
-            }
-            else
+            list_breakfast.ItemsSource = parseMeal("Breakfast", document);
+            if (list_breakfast.ItemsSource == null)
             {
                 menu_pivot.Items.Remove(pivot_breakfast);
             }
-
             //Load lunch
-            HtmlNodeCollection lunchtags = document.DocumentNode.SelectNodes("//div[@id='Lunch']//tr[@class=\"menu-item\"]/td/span"); ///td/span
-            collection_lunch.Clear();
-            if (lunchtags != null)
-            {
-                foreach (HtmlNode mi in lunchtags)
-                {
-                    MenuItem m = new MenuItem
-                    {
-                        name = HtmlEntity.DeEntitize(mi.InnerText)
-                    };
-                    collection_lunch.Add(m);
-                }
-            }
-            else
+            list_lunch.ItemsSource = parseMeal("Lunch", document);
+            if (list_lunch.ItemsSource == null)
             {
                 menu_pivot.Items.Remove(pivot_lunch);
             }
-
             //Load dinner
-            HtmlNodeCollection dinnertags = document.DocumentNode.SelectNodes("//div[@id='Dinner']//tr[@class=\"menu-item\"]/td/span"); ///td/span
-            collection_dinner.Clear();
-            if (dinnertags != null)
-            {
-                foreach (HtmlNode mi in dinnertags)
-                {
-                    MenuItem m = new MenuItem
-                    {
-                        name = HtmlEntity.DeEntitize(mi.InnerText)
-                    };
-                    collection_dinner.Add(m);
-                }
-            }
-            else
+            list_dinner.ItemsSource = parseMeal("Dinner", document);
+            if (list_dinner.ItemsSource == null)
             {
                 menu_pivot.Items.Remove(pivot_dinner);
-            }
-
-            if (breakfasttags == null && lunchtags == null && dinnertags == null)
-            {
-                //MessageBox.Show("This location is not serving today.");
-                //NavigationService.Navigate(new Uri("/MainPage.xaml", UriKind.Relative));
             }
         }
 

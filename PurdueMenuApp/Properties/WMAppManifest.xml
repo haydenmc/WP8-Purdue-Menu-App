@@ -5,7 +5,7 @@
     <Language code="en" />
     <Language code="en-US" />
   </Languages>
-  <App xmlns="" ProductID="{e2a13ea3-27c3-4311-ad98-600fc53eabce}" Title="Purdue Dining Menu" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="Hayden McAfee" Description="An app providing easy access to the daily Purdue dining court menus." Publisher="Hayden McAfee" PublisherID="{68875308-1f5c-4caf-9797-bdc7799f9f27}">
+  <App xmlns="" ProductID="{e2a13ea3-27c3-4311-ad98-600fc53eabce}" Title="Purdue Dining Menu" RuntimeType="Silverlight" Version="1.0.1.0" Genre="apps.normal" Author="Hayden McAfee" Description="An app providing easy access to the daily Purdue dining court menus." Publisher="Hayden McAfee" PublisherID="{68875308-1f5c-4caf-9797-bdc7799f9f27}">
     <IconPath IsRelative="true" IsResource="false">Images\icon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING" />
