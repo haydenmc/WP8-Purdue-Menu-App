@@ -101,8 +101,25 @@ namespace PurdueMenuApp
                                 HtmlNodeCollection times = dc.SelectNodes("a/div[@class='features-menu']/div[@id]/p");
                                 foreach (HtmlNode timeNode in times)
                                 {
-                                    DateTime open_time = DateTime.Parse(timeNode.InnerHtml.Replace(".","").Substring(0, timeNode.InnerHtml.IndexOf("-")-2));
-                                    DateTime close_time = DateTime.Parse(timeNode.InnerHtml.Replace(".", "").Substring(timeNode.InnerHtml.IndexOf("-")-1));
+                                    //So sometimes the doofuses maintaining the menu forget to put "pm" or "am" on one side of their time string. Need to check and correct for this.
+                                    string timestring = timeNode.InnerHtml.Replace(".","").Replace(" ","");
+                                    string open_str = timestring.Substring(0, timestring.IndexOf("-"));
+                                    string close_str = timestring.Substring(timestring.IndexOf("-") + 1);
+
+                                    //If we define the open time segment but not the close time segment, copy it.
+                                    if (open_str.ToLower().Contains("am") && (!close_str.ToLower().Contains("am") && !close_str.ToLower().Contains("pm")))
+                                        close_str += "am";
+                                    if (open_str.ToLower().Contains("pm") && (!close_str.ToLower().Contains("am") && !close_str.ToLower().Contains("pm")))
+                                        close_str += "pm";
+
+                                    //If we define the close time segment but not the open time segment, copy it.
+                                    if (close_str.ToLower().Contains("am") && (!open_str.ToLower().Contains("am") && !open_str.ToLower().Contains("pm")))
+                                        open_str += "am";
+                                    if (close_str.ToLower().Contains("pm") && (!open_str.ToLower().Contains("am") && !open_str.ToLower().Contains("pm")))
+                                        open_str += "pm";
+
+                                    DateTime open_time = DateTime.Parse(open_str);
+                                    DateTime close_time = DateTime.Parse(close_str);
                                     List<DateTime> time_range = new List<DateTime>();
                                     time_range.Add(open_time);
                                     time_range.Add(close_time);

@@ -150,6 +150,7 @@
     <Content Include="Images\dining_courts\wiley.jpg" />
     <Content Include="Images\dining_courts\windsor.jpg" />
     <Content Include="Images\icon.png" />
+    <Content Include="purdue_icon_black.png" />
     <Content Include="README_FIRST.txt" />
     <Content Include="Toolkit.Content\ApplicationBar.Cancel.png" />
     <Content Include="Toolkit.Content\ApplicationBar.Check.png" />
